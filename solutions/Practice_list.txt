@@ -1,4 +1,4 @@
 Questions that need more practice
 
 Hard
-  41. First Missing Positive      Array Hash Table
+  41. First Missing Positive      Array, Hash Table
