@@ -2,3 +2,7 @@ Questions that need more practice
 
 Hard
   41. First Missing Positive      Array, Hash Table
+
+Medium
+  1590. Make Sum Divisible by P      Prefix Sum, Array, Hash Table
+
