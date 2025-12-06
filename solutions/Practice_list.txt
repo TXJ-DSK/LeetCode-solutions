@@ -13,3 +13,4 @@ Medium
   912. Sort an Array      Sorting, Array, Divide and Conquer
   932. Beautiful Array      Math, Divide and Conquer, Array
   106. Construct Binary Tree from Inorder and Postorder Traversal      Binary Tree, Divide and Conquer, Array, Hash Table
+  481. Magical String      Two Pointers, String
