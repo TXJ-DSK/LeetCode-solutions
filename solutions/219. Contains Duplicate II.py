@@ -5,11 +5,10 @@ class Solution:
         num_idx = dict()
         for i in range(len(nums)):
             if nums[i] in num_idx:
-                j = num_idx[nums[i]][-1]
-                if j + k >= i:
+                if num_idx[nums[i]] + k >= i:
                     return True
-                num_idx[nums[i]].append(i)
+                num_idx[nums[i]] = i
             else:
-                num_idx[nums[i]] = [i]
+                num_idx[nums[i]] = i
         return False
         
