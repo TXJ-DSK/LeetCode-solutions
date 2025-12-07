@@ -14,3 +14,4 @@ Medium
   932. Beautiful Array      Math, Divide and Conquer, Array
   106. Construct Binary Tree from Inorder and Postorder Traversal      Binary Tree, Divide and Conquer, Array, Hash Table
   481. Magical String      Two Pointers, String
+  1358. Number of Substrings Containing All Three Characters      Hash Table, Sliding Window, String
