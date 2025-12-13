@@ -3,6 +3,7 @@ Questions that need more practice
 Hard
   41. First Missing Positive      Array, Hash Table
   493. Reverse Pairs      Merge Sort, Divide and Conquer, Array
+  214. Shortest Palindrome      Rolling Hash, String Matching
 
 Medium
   1590. Make Sum Divisible by P      Prefix Sum, Array, Hash Table
