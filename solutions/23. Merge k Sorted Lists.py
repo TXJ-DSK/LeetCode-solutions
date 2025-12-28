@@ -1,3 +1,4 @@
+from heapq import heapify, heappop, heappush
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -5,27 +6,41 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        if len(lists) == 0:
-            return None
-        if len(lists) == 1:
-            return lists[0]
-        dummy_head = ListNode(10000)
-        tail = dummy_head
-        k = len(lists)
-        vals = [10000] * k
-        for i in range(k):
-            if lists[i] is None:
-                continue
-            vals[i] = lists[i].val
-            lists[i] = lists[i].next
-        while min(vals) < 10000:
-            min_val = min(vals)
-            idx = vals.index(min_val)
-            tail.next = ListNode(min_val)
-            tail = tail.next
-            if lists[idx] is None:
-                vals[idx] = 10000
-            else:
-                vals[idx] = lists[idx].val
-                lists[idx] = lists[idx].next
+        """
+        Merge k sorted linked lists into one sorted linked list.
+      
+        Args:
+            lists: List of head nodes of k sorted linked lists
+          
+        Returns:
+            Head of the merged sorted linked list
+        """
+        # Add comparison method to ListNode for heap operations
+        # This allows heap to compare ListNode objects by their values
+        setattr(ListNode, "__lt__", lambda self, other: self.val < other.val)
+      
+        # Initialize priority queue with all non-null head nodes
+        priority_queue = [head for head in lists if head]
+      
+        # Convert list into a min-heap based on node values
+        heapify(priority_queue)
+      
+        # Create dummy node to simplify list construction
+        dummy_head = ListNode()
+        current_node = dummy_head
+      
+        # Process nodes from heap until empty
+        while priority_queue:
+            # Extract node with minimum value
+            min_node = heappop(priority_queue)
+          
+            # If extracted node has a next node, add it to heap
+            if min_node.next:
+                heappush(priority_queue, min_node.next)
+          
+            # Append the minimum node to result list
+            current_node.next = min_node
+            current_node = current_node.next
+      
+        # Return the head of merged list (skip dummy node)
         return dummy_head.next
