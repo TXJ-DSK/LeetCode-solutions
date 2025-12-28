@@ -17,3 +17,4 @@ Medium
   481. Magical String      Two Pointers, String
   1358. Number of Substrings Containing All Three Characters      Hash Table, Sliding Window, String
   424. Longest Repeating Character Replacement      Sliding Window, Hash Table, String
+  1482. Minimum Number of Days to Make m Bouquets      Array, Binary Search
