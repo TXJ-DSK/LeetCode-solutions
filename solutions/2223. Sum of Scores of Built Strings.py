@@ -1,23 +1,35 @@
 class Solution:
     def sumScores(self, s: str) -> int:
-        total_score = 0
-        for i in range(len(s)):
-            result = self.binarySearch(i,s)
-            if result > 0:
-                score = result - i + 1
-                total_score += score
-        return total_score
+        return sum(self.calculate_z(s)) + len(s)
     
-    def binarySearch(self, start: int, s: str) -> int:
-        left = start
-        right = len(s)-1
-        result = -1
-        while right >= left:
-            mid = left + (right - left) // 2
-            prefix = s[start:mid+1]
-            if prefix == s[:len(prefix)]:
-                result = mid
-                left = mid + 1
+    def calculate_z(self, s: str):
+        n = len(s)
+        z = [0] * n
+        l, r = 0, 0
+        
+        for i in range(1, n):
+            # Case 2: Inside the box
+            if i <= r:
+                k = i - l
+                # Case 2a: Value stays within the box
+                if z[k] < r - i + 1:
+                    z[i] = z[k]
+                # Case 2b: Value touches boundary, need to extend
+                else:
+                    # Start matching from the known boundary (r)
+                    l = i
+                    while r < n and s[r] == s[r - l]:
+                        r += 1
+                    z[i] = r - l
+                    r -= 1
+            
+            # Case 1: Outside the box
             else:
-                right = mid - 1
-        return result
+                l, r = i, i
+                while r < n and s[r] == s[r - l]:
+                    r += 1
+                z[i] = r - l
+                r -= 1
+                
+        return z
+
