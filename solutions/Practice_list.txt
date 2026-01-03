@@ -19,3 +19,4 @@ Medium
   1358. Number of Substrings Containing All Three Characters      Hash Table, Sliding Window, String
   424. Longest Repeating Character Replacement      Sliding Window, Hash Table, String
   1482. Minimum Number of Days to Make m Bouquets      Array, Binary Search
+  143. Reorder List      Linked List, Two Pointers
