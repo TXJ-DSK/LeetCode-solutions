@@ -20,3 +20,4 @@ Medium
   424. Longest Repeating Character Replacement      Sliding Window, Hash Table, String
   1482. Minimum Number of Days to Make m Bouquets      Array, Binary Search
   143. Reorder List      Linked List, Two Pointers
+  128. Longest Consecutive Sequence      Union Find, Array, Hash Table
