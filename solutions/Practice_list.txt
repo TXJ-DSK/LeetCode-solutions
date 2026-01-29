@@ -22,3 +22,4 @@ Medium
   143. Reorder List      Linked List, Two Pointers
   128. Longest Consecutive Sequence      Union Find, Array, Hash Table
   274. H-Index      Array, Sorting, Counting Sort
+  380. Insert Delete GetRandom O(1)      Array, Hash Table, Math, Randomized
