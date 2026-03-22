@@ -1,53 +1,62 @@
+from typing import List
+from collections import Counter
+
+
+class UnionFind:
+    """Union-Find (Disjoint Set Union) data structure with path compression."""
+  
+    def __init__(self, n: int) -> None:
+        """Initialize n disjoint sets, each element is its own parent initially."""
+        self.parent = list(range(n))
+  
+    def union(self, a: int, b: int) -> None:
+        """Unite the sets containing elements a and b."""
+        root_a = self.find(a)
+        root_b = self.find(b)
+      
+        # Only unite if they belong to different sets
+        if root_a != root_b:
+            self.parent[root_a] = root_b
+  
+    def find(self, x: int) -> int:
+        """Find the root of the set containing x with path compression."""
+        if self.parent[x] != x:
+            # Path compression: make every node point directly to the root
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+
 class Solution:
-    def getFactor(self, num: int) -> Set[int]:
-        if num <= 1:
-            return set()
-        elif num < 4:
-            return set([num])
-        else:
-            result = []
-            sqroot = math.floor(math.sqrt(num))
-            for i in range(2, sqroot + 1):
-                if num % i == 0:
-                    result.append(i)
-                    result.append(num//i)
-            if num == sqroot ** 2:
-                result.pop(-1)
-            result.append(num)
-            return set(result)
-
     def largestComponentSize(self, nums: List[int]) -> int:
-        class Component:
-            self.factors = set()
-            self.count = 0
-
-            def __init__(self, factors, count=1):
-                self.factors = factors
-                self.count = count
-            def __repr__(self):
-                return f"count={self.count},factors={self.factors}"
-            def __str__(self):
-                return self.__repr__()
-        components = [Component(self.getFactor(nums[0]))]
-        for num in nums[1:]:
-            factors = self.getFactor(num)
-            connectables = []
-            for c in components:
-                cfactors = c.factors
-                common = factors & cfactors
-                if len(common) > 0:
-                    connectables.append(c)
-            if len(connectables) == 1:
-                connectables[0].count += 1
-                connectables[0].factors.update(factors)
-            else:
-                components = [c for c in components if c not in connectables]
-                new_count = 1
-                for c in connectables:
-                    new_count += c.count
-                    factors.update(c.factors)
-                components.append(Component(factors, new_count))
-        max_count = 1
-        for c in components:
-            max_count = max(max_count, c.count)
-        return max_count
+        """
+        Find the size of the largest connected component where two numbers 
+        are connected if they share a common factor greater than 1.
+      
+        Args:
+            nums: List of positive integers
+          
+        Returns:
+            Size of the largest connected component
+        """
+        # Create UnionFind structure with size equal to max value + 1
+        max_value = max(nums)
+        union_find = UnionFind(max_value + 1)
+      
+        # For each number, connect it with all its factors
+        for num in nums:
+            # Find all factors by iterating up to sqrt(num)
+            factor = 2
+            while factor * factor <= num:
+                if num % factor == 0:
+                    # Connect num with its factor
+                    union_find.union(num, factor)
+                    # Connect num with its complementary factor (num // factor)
+                    union_find.union(num, num // factor)
+                factor += 1
+      
+        # Count the size of each connected component
+        # by finding the root of each number and counting occurrences
+        component_sizes = Counter(union_find.find(num) for num in nums)
+      
+        # Return the size of the largest component
+        return max(component_sizes.values())
