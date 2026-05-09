@@ -33,4 +33,24 @@ class Solution:
                 uniques.add(find(parent, pos, n))
         uniques.discard(-1)
         return len(uniques)
-        
+
+# DFS solution
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        m, n = len(grid), len(grid[0])
+        result = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == "1":
+                    self.dfs(grid, i, j)
+                    result += 1
+        return result
+
+    def dfs(self, grid, i, j):
+        if i<0 or j<0 or i>len(grid)-1 or j>len(grid[0])-1 or grid[i][j] != "1":
+            return
+        grid[i][j] = "-1" # visited
+        self.dfs(grid, i-1, j)
+        self.dfs(grid, i+1, j)
+        self.dfs(grid, i, j-1)
+        self.dfs(grid, i, j+1)
