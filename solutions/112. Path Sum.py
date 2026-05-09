@@ -1,18 +1,23 @@
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+# DFS with iteration, O(n) time and space complexity
+# Recursion may result in stack overflow, because maximum tree height = 5000
+
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
-        return self.recursive(root, targetSum, 0)
-        
-    def recursive(self, node: Optional[TreeNode], targetSum: int, prev: int) -> bool:
-        if node is None:
+        if root is None:
             return False
-        if node.left is None and node.right is None:
-            return node.val + prev == targetSum
-        else:
-            return self.recursive(node.left, targetSum, prev+node.val) or self.recursive(node.right, targetSum, prev+node.val)
-        
+        currLevel = [(root, 0)]
+        nextLevel = []
+        while len(currLevel) > 0:
+            for tup in currLevel:
+                node = tup[0]
+                pathSum = tup[1] + node.val
+                if node.left is None and node.right is None:
+                    if pathSum == targetSum:
+                        return True
+                if node.left:
+                    nextLevel.append((node.left, pathSum))
+                if node.right:
+                    nextLevel.append((node.right, pathSum))
+            currLevel = nextLevel
+            nextLevel = []
+        return False
