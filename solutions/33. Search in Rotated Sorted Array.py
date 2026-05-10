@@ -1,41 +1,34 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         if len(nums) == 1:
-            return 0 if target == nums[0] else -1
-        # find the index of largest element, after rotation
-        def findMaxIdx(left,right):
-            while left <= right:
-                mid = left + (right - left) // 2
-                #print(f"left={left},right={right},mid={mid}")
-                if mid == len(nums)-1:
-                    return mid
-                if nums[mid] > nums[mid+1]:
-                    return mid
-                if nums[mid] < nums[0]:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-            return -1
-        left, right = 0, len(nums)-1
-        max_idx = findMaxIdx(left,right)
-        if target < nums[0]:# in the second part
-            left = max_idx+1
-        else: # in the first part
-            right = max_idx
-        if left > right:
-            return -1
-        def binarySearch(left, right):
-            while left <= right:
-                mid = left + (right - left) // 2
-                if nums[mid] == target:
-                    return mid
-                if nums[mid] < target:
-                    left = mid + 1
-                else:
-                    right = mid - 1
-            return -1
-        return binarySearch(left, right)
-        
-    
-    
-        
+            if target == nums[0]:
+                return 0
+            else:
+                return -1
+        def findMaxIdx(nums, left, right):
+            mid = left + (right - left) // 2
+            if (mid+1 == len(nums) or nums[mid] > nums[mid+1]) and (mid==0 or nums[mid] > nums[mid-1]):
+                return mid
+            if nums[mid] >= nums[left]:
+                return findMaxIdx(nums, mid+1, right)
+            else:
+                return findMaxIdx(nums, left, mid-1)
+        maxIdx = findMaxIdx(nums, 0, len(nums)-1)
+        lower, higher = -1, -1
+        if target >= nums[0]:
+            lower = 0
+            higher = maxIdx
+        else:
+            lower = maxIdx+1
+            higher = len(nums) -1
+        def binarySearch(nums, left, right, target):
+            if right < left:
+                return -1
+            mid = left + (right - left) // 2
+            if nums[mid] == target:
+                return mid
+            if nums[mid] < target:
+                return binarySearch(nums, mid + 1, right, target)
+            else:
+                return binarySearch(nums, left, mid - 1, target)
+        return binarySearch(nums, lower, higher, target)
