@@ -1,4 +1,4 @@
-# O(N) Time, O(1) Space
+# O(N + M) Time, O(1) Space, N is length of landStartTime, M is length of waterStartTime
 class Solution:
     def earliestFinishTime(self, landStartTime: List[int], landDuration: List[int], waterStartTime: List[int], waterDuration: List[int]) -> int:
         min_land_end = 9999
