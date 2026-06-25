@@ -1,28 +1,31 @@
-import collections
+# O(V + E) Time, O(V) Space
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        path = set()
+        dependency = dict()
+        for course, pre in prerequisites:
+            if course not in dependency:
+                dependency[course] = [pre]
+            else:
+                dependency[course].append(pre)
         visited = set()
-        dependency = defaultdict(set)
-        for prerequisite in prerequisites:
-            dependency[prerequisite[0]].add(prerequisite[1])
         
-        def dfs(course) -> bool:
-            if course in path:
-                return False
-            path.add(course)
-            visited.add(course)
-            for prerequisite in dependency[course]:
-                if prerequisite in path:
+        def validate(path, last):
+            if last in visited:
+                return True
+            if last not in dependency:
+                visited.add(last)
+                return True
+            for pre in dependency[last]:
+                if pre in path:
                     return False
-                if prerequisite in visited:
-                    continue
-                if not dfs(prerequisite):
+                path.add(pre)
+                if not validate(path, pre):
                     return False
-            path.remove(course)
+                path.remove(pre)
+            visited.add(last)
             return True
-        for i in range(numCourses):
-            if i not in visited:
-                if not dfs(i):
-                    return False
+        
+        for course in range(numCourses):
+            if not validate({course}, course):
+                return False
         return True
