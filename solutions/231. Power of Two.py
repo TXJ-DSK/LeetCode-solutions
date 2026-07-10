@@ -8,3 +8,4 @@ class Solution:
                 return False
             n = n // 2
         return True
+# One line solution: return n > 0 and not (n & (n - 1))
