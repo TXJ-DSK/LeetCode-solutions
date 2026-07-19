@@ -26,3 +26,4 @@ Medium
   380. Insert Delete GetRandom O(1)      Array, Hash Table, Math, Randomized
   238. Product of Array Except Self      Array, Prefix Sum, Suffix Sum
   162. Find Peak Element      Array, Binary Search
+  1081. Smallest Subsequence of Distinct Characters      String, Stack, Greedy, Monotonic Stack
